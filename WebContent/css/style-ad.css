@@ -85,6 +85,7 @@ main {
   width: 500px;
   text-align: center;
   margin: 0 auto ;
+  padding-top: 16px;
  }
 
  /* number formのスタイル */
@@ -116,6 +117,11 @@ th,td {
    margin: 0 auto ;
  }
  /* 商品登録・編集table のスタイル */
+  th.example1 {
+  text-align: center;
+  width: 30px;
+  background-color: #9ec5fe;
+ }
  th.example2 {
   text-align: center;
   width: 100px;
@@ -137,9 +143,13 @@ th,td {
   background-color: #9ec5fe;
  }
 
+ td.example1 {
+  text-align: center;
+  width: 30px;
+ }
  td.example2 {
   text-align: left;
-  width: 100px;
+  width: 50px;
  }
  th.example3 {
   text-align: center;
@@ -258,7 +268,7 @@ li.page.navi-active a {
 }
 
 label {
-  padding: 0px ;
+  padding: 15px 0px 15px 0px;
   cursor: pointer;
 }
 
@@ -309,6 +319,7 @@ table td {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    font-size: 15px;
 }
 
 
@@ -323,8 +334,6 @@ table td {
   height: 70px;
   background-color: #ffffff ;
   margin: 0 ;
-  padding-bottom: 30px ;
-
 }
 
 /* pagenation　DELTAのスタイル 													追加しました　1/27 今井 */

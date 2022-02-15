@@ -219,7 +219,7 @@ public class AccountDAO {
 					   + " ADRESS = '" + account.getAdress() + "',"
 					   + " TEL = '" + account.getTel() + "',"
 					   + " CARD = '" + account.getCard() + "'"
-					   + " WHERE USER_ID = '" + account.getUserId() + "'";
+					   + " WHERE USER_NAME = '" + account.getUserName() + "'";
 
 			// SQL文を発行
 			executeUpdate(SQL);
