@@ -276,14 +276,15 @@ public class AccountDAO {
 	        connect();
 
 			 //メールアドレスとパスワードが重複したデータの有無を調べるSELECT文を準備
-		    String sql = "SELECT USER_ID, USER_NAME, EMAIL, PASS, ADRESS, TEL, CARD FROM USER WHERE EMAIL = ? OR PASS = ?";
+		    String sql = "SELECT USER_ID, USER_NAME, EMAIL, PASS, ADRESS, TEL, CARD FROM USER WHERE EMAIL = ? AND PASS = ?";
+		    System.out.println(sql);
 			pStmt = con.prepareStatement(sql);
 			pStmt.setString(1, account.getEmail());
 			pStmt.setString(2, account.getPass());
 
 		    //SELECT文を実行し、結果表を取得
 		    ResultSet rs = pStmt.executeQuery();
-
+		    System.out.println(rs);
 		    //一致したユーザーが存在しなかった場合
 		    if(!rs.next()) {
 		    	return true;

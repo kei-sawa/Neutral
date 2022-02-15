@@ -69,13 +69,15 @@ public class RegisterServlet extends HttpServlet {
 			// セッションスコープからカート情報を取得
 			Cart cart = (Cart) session.getAttribute("cart");
 			
+			//cartに情報が入っていた時の処理
+			if(cart != null) {
 			// 新規顧客IDをcartに反映する
 			cart.setUserId(user.getUserId());
 
 			// CartDAOインスタンスを生成し、Cartテーブルに情報を追加
 			CartDAO cartDao = new CartDAO();
 			cartDao.insert(cart);
-
+			}
 			//フォワード
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/registerOK.jsp");
 			dispatcher.forward(request, response);
@@ -87,7 +89,7 @@ public class RegisterServlet extends HttpServlet {
 			ad.delete(userId);
 
 			//フォワード
-			request.setAttribute("message", "このメールアドレスまたはパスワードは既に使用されています");
+			request.setAttribute("message", "このメールアドレスとパスワードは既に使用されています");
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/register.jsp");
 			dispatcher.forward(request, response);
 
