@@ -35,6 +35,7 @@ public class CartServlet extends HttpServlet {
 			request.setAttribute("cartList", cart);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/orderLogin.jsp");
 			dispatcher.forward(request,  response);
+			
 		// Accountデータが空の場合（非ログイン時）
 		}else {
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/orderLogout.jsp");
@@ -42,7 +43,6 @@ public class CartServlet extends HttpServlet {
 		}
 
 	}
-
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
