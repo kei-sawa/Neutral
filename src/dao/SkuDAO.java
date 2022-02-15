@@ -7,9 +7,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import model.Product;
+import model.SKU;
 
-public class ProductDAO {
+public class SkuDAO {
 	// JDBCドライバ内部のDriverクラスパス
 	private static final String RDB_DRIVE = "com.mysql.jdbc.Driver";
 
@@ -107,41 +107,43 @@ public class ProductDAO {
 	}
 
 	/**
-	 * DBの商品情報を格納するproductテーブルから全商品情報を取得する関数
+	 * 商品情報を持つproductテーブルと在庫情報を持つSKUテーブルから全商品情報を取得する関数
 	 *
 	 * @return 全商品情報のリスト
 	 *
 	 * @throws IllegalStateException 関数内部で例外が発生した場合
 	 */
-	public ArrayList<Product> selectAll() {
+	public ArrayList<SKU> selectAll() {
 
 		try {
 			// DB接続
 			connect();
 
 			// 商品データを全件取得するSQL文を用意
-			String sql = "SELECT * FROM product";
+			String sql = "SELECT * FROM sku LEFT OUTER JOIN product ON sku.PRODUCT_ID = product.PRODUCT_ID LEFT OUTER JOIN category ON product.CATEGORY_ID = category.CATEGORY_ID";
 
 			// SQL文を発行し、結果セットを取得
 			ResultSet rs = executeQuery(sql);
 
 			// 商品データ格納用のリストオブジェクトを生成
-			ArrayList<Product> productList = new ArrayList<Product>();
+			ArrayList<SKU> skuList = new ArrayList<SKU>();
 
 			// 結果セットから1行ずつ商品データを取得
 			while (rs.next()) {
-				Product product = new Product();
-				product.setProductId(rs.getString("product_id"));
-				product.setCategoryId(rs.getString("category_id"));
-				product.setProductName(rs.getString("product_Name"));
-				product.setPrice(rs.getInt("price"));
-				product.setDescription(rs.getString("description"));
-				product.setAttribute(rs.getString("attribute"));
-				productList.add(product);
+				SKU sku = new SKU();
+				sku.setProductId(rs.getString("product_id"));
+				sku.setCategoryId(rs.getString("category_id"));
+				sku.setProductName(rs.getString("product_name"));
+				sku.setSize(rs.getString("product_size"));
+				sku.setStock(rs.getInt("sku_number"));
+				sku.setPrice(rs.getInt("price"));
+				sku.setDescription(rs.getString("description"));
+				sku.setAttribute(rs.getString("attribute"));
+				skuList.add(sku);
 			}
 
 			// 呼び出し元へ商品データを返す
-			return productList;
+			return skuList;
 
 		} catch (Exception e) {
 			throw new IllegalStateException(e);
@@ -152,53 +154,7 @@ public class ProductDAO {
 
 	}
 
-	/**
-	 * 引数の商品IDを基にDBの商品情報を格納するproductテーブルから該当商品データの検索をおこなう関数
-	 *
-	 * @param isbn 検索対象のISBN
-	 *
-	 * @return 検索結果の商品情報のProductオブジェクト
-	 *
-	 * @throws IllegalStateException 関数内部で例外が発生した場合
-	 */
-	public Product selectByProductId(String productId) {
 
-		try {
-			// DB接続
-			connect();
-
-			// 指定された商品IDの商品データを取得するSQL文を用意
-			String sql = "SELECT * FROM product WHERE product_id='" + productId + "'";
-
-			// SQL文を発行し、結果セットを取得
-			ResultSet rs = executeQuery(sql);
-
-			// 商品データ格納用のproductオブジェクトを生成
-			Product product = new Product();
-
-			// 結果セットから商品データを取得
-			if (rs.next()) {
-				product.setProductId(rs.getString("product_id"));
-				product.setCategoryId(rs.getString("category_id"));
-				product.setProductName(rs.getString("product_Name"));
-				product.setPrice(rs.getInt("price"));
-				//product.setSize(rs.getString("product_size"));
-				//product.setStock(rs.getInt("sku_number"));
-				product.setDescription(rs.getString("description"));
-				product.setAttribute(rs.getString("attribute"));
-			}
-
-			// 呼び出し元へ商品データを返す
-			return product;
-
-		} catch (Exception e) {
-			throw new IllegalStateException(e);
-		} finally {
-			// DB接続解除
-			disconnect();
-		}
-
-	}
 
 	/**
 	 * 引数で与えられた商品情報を、書籍データを格納するbookinfoテーブルへ登録する関数
@@ -289,48 +245,5 @@ public class ProductDAO {
 //
 //	}
 
-	/**
-	 * 引数の各データを基にDBの書籍情報を格納するbookinfoテーブルから該当書籍データの絞込み検索処理をおこなう関数
-	 *
-	 * @param title 検索対象のTITLE
-	 *
-	 * @return 該当書籍データのリスト
-	 *
-	 * @throws IllegalStateException 関数内部で例外が発生した場合
-	 */
-//	public ArrayList<Book> search(String title) {
-//
-//		try {
-//			// DB接続
-//			connect();
-//
-//			// 指定された書籍タイトルに該当する書籍データを取得するSQL文を用意
-//			String sql = "SELECT * FROM bookinfo WHERE title LIKE '%" + title + "%'";
-//
-//			// SQL文を発行し、結果セットを取得
-//			ResultSet rs = executeQuery(sql);
-//
-//			// 書籍データ格納用のリストオブジェクトを生成
-//			ArrayList<Book> bookList = new ArrayList<Book>();
-//
-//			// 結果セットから1行ずつ書籍データを取得
-//			while (rs.next()) {
-//				Book book = new Book();
-//				book.setIsbn(rs.getString("isbn"));
-//				book.setTitle(rs.getString("title"));
-//				book.setPrice(rs.getInt("price"));
-//				bookList.add(book);
-//			}
-//
-//			// 呼び出し元へ書籍リストを返す
-//			return bookList;
-//
-//		} catch (Exception e) {
-//			throw new IllegalStateException(e);
-//		} finally {
-//			// DB接続解除
-//			disconnect();
-//		}
-//
-//	}
+
 }
