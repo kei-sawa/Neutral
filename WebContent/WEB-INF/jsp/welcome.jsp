@@ -5,6 +5,8 @@
 <%
     // リクエストスコープから商品情報を取得
     ArrayList<Product> productList = (ArrayList<Product>)request.getAttribute("productList");
+	//リクエストスコープから検索ワードを取得
+	String search = (String)request.getAttribute("search");
 %>
 <!DOCTYPE html>
 <html>
@@ -21,14 +23,25 @@
 <link rel="stylesheet" href="css/headers.css">
 <link rel="stylesheet" href="css/common.css">
 <link rel="stylesheet" href="css/style.css">
+<style>
+.searchWord {
+	font-weight: bold;
+	font-size: 16px;
+}
+</style>
 </head>
 <body>
 <!-- HEADER -->
 <jsp:include page="header.jsp"></jsp:include>
 
 <main>
+<%if(search == null) { %>
     <p>ファッションを楽しむすべての人に。</p><br>
     <p>ユニセックスアイテムでもっと自由に。もっと楽しく。</p><br>
+<% } %>
+<% if(search != null) {%>
+	<p class="searchWord">"<%=search %>" の検索結果</p>
+<% } %>
 
 	<!-- 商品リストから1行ずつデータを取得し表示 -->
 	<div class="photogallery">
@@ -36,7 +49,7 @@
 		<div class="photo shadow fade1">
 		    <div class="inner">
 			    <a href="/Neutral/OrderServlet?id=<%=product.getProductId()%>">
-			    <img src="img/<%=product.getProductId()%>.jpg" alt="<%=product.getProductName()%>">
+			    <img src="img/<%=product.getProductImage()%>" alt="<%=product.getProductName()%>">
 			    </a>
 		    </div>
 		    <div class="inner-text">

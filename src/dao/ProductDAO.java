@@ -134,6 +134,7 @@ public class ProductDAO {
 				product.setProductId(rs.getString("product_id"));
 				product.setCategoryId(rs.getString("category_id"));
 				product.setProductName(rs.getString("product_Name"));
+				product.setProductImage(rs.getString("image"));
 				product.setPrice(rs.getInt("price"));
 				product.setDescription(rs.getString("description"));
 				product.setAttribute(rs.getString("attribute"));
@@ -181,6 +182,7 @@ public class ProductDAO {
 				product.setProductId(rs.getString("product_id"));
 				product.setCategoryId(rs.getString("category_id"));
 				product.setProductName(rs.getString("product_Name"));
+				product.setProductImage(rs.getString("image"));
 				product.setPrice(rs.getInt("price"));
 				product.setDescription(rs.getString("description"));
 				product.setAttribute(rs.getString("attribute"));
@@ -228,9 +230,8 @@ public class ProductDAO {
 				product.setProductId(rs.getString("product_id"));
 				product.setCategoryId(rs.getString("category_id"));
 				product.setProductName(rs.getString("product_Name"));
+				product.setProductImage(rs.getString("image"));
 				product.setPrice(rs.getInt("price"));
-				//product.setSize(rs.getString("product_size"));
-				//product.setStock(rs.getInt("sku_number"));
 				product.setDescription(rs.getString("description"));
 				product.setAttribute(rs.getString("attribute"));
 			}
@@ -278,6 +279,7 @@ public class ProductDAO {
 				product.setProductId(rs.getString("product_id"));
 				product.setCategoryId(rs.getString("category_id"));
 				product.setProductName(rs.getString("product_Name"));
+				product.setProductImage(rs.getString("image"));
 				product.setPrice(rs.getInt("price"));
 				product.setDescription(rs.getString("description"));
 				product.setAttribute(rs.getString("attribute"));
