@@ -189,7 +189,7 @@ public class AccountDAO {
 
 	        // SQL文を発行
 	     	executeUpdate(accountSql);
-	     			
+
 	    }catch(Exception e){
 	    	throw new IllegalStateException(e);
 	    }finally{
@@ -231,7 +231,7 @@ public class AccountDAO {
 			disconnect();
 		}
 	}
-	
+
 	/**
 	 * 顧客情報を格納するUSERテーブルから、引数で与えられたuserIdを持つ顧客データの削除をおこなう関数
 	 *
