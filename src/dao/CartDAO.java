@@ -193,7 +193,7 @@ public class CartDAO {
 		}
 
 	}
-
+	
 	/**
 	 * 引数で与えられた顧客ID情報に紐づくカートデータをカートテーブルから全て削除する関数
 	 *
@@ -221,7 +221,7 @@ public class CartDAO {
 		}
 
 	}
-
+	
 	/**
 	 * 引数で与えられたカートID情報に紐づくカート情報をカートテーブルから削除する関数
 	 *
@@ -238,6 +238,76 @@ public class CartDAO {
 			// カート情報を削除するSQL文を用意
 			String sql = "DELETE FROM `cart` WHERE CART_ID = " + cartId;
 			// SQL文を発行
+			System.out.println(sql);
+			executeUpdate(sql);
+
+		} catch (Exception e) {
+			throw new IllegalStateException(e);
+		} finally {
+			// DB接続解除
+			disconnect();
+		}
+
+	}
+	
+	/**
+	 * 引数の顧客ID、商品ID、商品サイズ、注文数を基に、Cartテーブルから該当顧客のカートに同一商品が入っているか判定する関数
+	 *
+	 * @param userId 検索対象のuserId
+	 *
+	 * @return 検索結果のカート情報のArrayList<Cart>オブジェクト
+	 *
+	 * @throws IllegalStateException 関数内部で例外が発生した場合
+	 */
+	public int cartCheck(int userId, String productId, String productSize) {
+
+		try {
+			// DB接続
+			connect();
+
+			// 指定された商品IDの商品の各サイズの在庫数データを取得するSQL文を用意
+			String sql = "SELECT ORDER_NUMBER FROM `cart`"
+			+ " WHERE USER_ID = " + userId + " AND PRODUCT_ID = '" + productId + "' AND ORDER_SIZE = '" + productSize + "'";
+			// SQL文を発行
+			System.out.println(sql);
+			smt.execute(sql);
+
+			//SQLの実行結果を変数stockにセット
+			ResultSet rs = smt.getResultSet();
+			//resultsetがnullかどうかを確認
+			if(rs.next()) {
+				//nullじゃなかった場合の処理
+				int cartNumber = rs.getInt("ORDER_NUMBER");
+				return cartNumber;
+			}else {
+				//nullだった場合の処理
+				return 0;
+			}
+		} catch (Exception e) {
+			throw new IllegalStateException(e);
+		} finally {
+			// DB接続解除
+			disconnect();
+		}
+
+	}
+	
+	/**
+	 * 引数で与えられたオーダー商品情報を、カートデータを格納するcartテーブルへ登録する関数
+	 *
+	 * @param cart 購入する商品情報のCartオブジェクト
+	 *
+	 * @throws IllegalStateException 関数内部で例外が発生した場合
+	 */
+	public void cartAdd(int userId, String productId, String productSize, int orderNumber) {
+
+		try {
+			// DB接続
+			connect();
+
+			// 書籍データを登録するSQL文を用意
+			String sql = "UPDATE `cart` SET ORDER_NUMBER = ORDER_NUMBER + " + orderNumber + " WHERE USER_ID = " + userId + " AND PRODUCT_ID = '" + productId + "' AND ORDER_SIZE = '" + productSize +"';";
+//			 SQL文を発行
 			System.out.println(sql);
 			executeUpdate(sql);
 
