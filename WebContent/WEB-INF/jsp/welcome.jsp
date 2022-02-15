@@ -10,6 +10,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Neutral | TOPページ</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -27,7 +28,7 @@
 
 <main>
     <p>ファッションを楽しむすべての人に。</p><br>
-    <p>ユニセックスアイテムでもっと自由に。もっと楽しく。</p>
+    <p>ユニセックスアイテムでもっと自由に。もっと楽しく。</p><br>
 
 	<!-- 商品リストから1行ずつデータを取得し表示 -->
 	<div class="photogallery">
