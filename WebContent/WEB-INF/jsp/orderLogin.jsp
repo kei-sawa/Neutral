@@ -55,26 +55,41 @@ color:red;
 		          <th scope="col" style="width: 120px"></th>
 		        </tr>
 		      </thead>
-		      <tbody>
+		      <tbody id="table_contents">
 
 			    <% if (cartList != null) { %>
 			    	<% int totalPrice = 0; %>
 		        	<%  for (Cart cart: cartList) { %>
 			        <tr>
-			          <th scope="row" style="width: 50px" class="checkbox"><div>
-			            <input class="form-check-input" type="checkbox" name="checked<%=cart.getCartId()%>" value="<%=cart.getCartId()%>" aria-label="..." checked>
-			          </div></th>
+			          <th scope="row" style="width: 50px" class="checkbox">
+			          	<div>
+			          	  <input class="form-check-input" type="checkbox" name="checked<%=cart.getCartId()%>" value="<%=cart.getCartId()%>" aria-label="..." checked>
+			          	</div>
+			          </th>
 			          <td style="width: 100px"><%=cart.getProductId()%></td>
 			          <td style="width: 200px"><%=cart.getOrderProduct()%></td>
 			          <td style="width: 100px" class="example2"><%=cart.getOrderSize()%></td>
-			          <td style="width: 120px" class="example1"><input class="kosuu" type="number" name="orderNumber<%=cart.getCartId()%>" min="1" value="<%=cart.getOrderNumber()%>">個</td>
-			          <td style="width: 120px" class="example1"><%=cart.getOrderPrice()%>円</td>
-			          <td style="width: 120px" class="example1"><%=cart.getSubtotal()%>円</td>
+			          <td style="width: 120px" class="example1"><input class="kosuu" type="number" id="orderLot" name="orderNumber<%=cart.getCartId()%>" min="1" value="<%=cart.getOrderNumber()%>">個</td>
+			          <td style="width: 120px" class="example1">
+			          	<script>
+			          		var price = <%=cart.getOrderPrice()%>;
+			          	</script>
+			          	<%=cart.getOrderPrice()%>円
+			          </td>
+			          <td style="width: 120px" class="example1" id="subtotal">
+			          	<script>
+	                  		  //注文数量と価格をもとに小計を計算
+		                    var lot = parseInt(document.getElementById("orderLot").value);
+		                    console.log(lot);
+		                    var subtotal = lot * price;
+		                    document.getElementById("subtotal").innerText = subtotal + " 円";
+		               	</script>
+			          </td>
 			          <td style="width: 120px" class="example2"><a href="/Neutral/CartDeleteServlet?id=<%=cart.getCartId()%>"><button type="button" class="btn btn-outline-danger">削除</button></a></td>
 			        </tr>
 			        <% totalPrice += cart.getSubtotal(); %>
 					<% } %>
-			      </tbody>
+<%-- 			      </tbody>
 			      <tfoot>
 			        <tr>
 			          <th scope="col" style="width: 50px"></th>
@@ -86,7 +101,7 @@ color:red;
 			          <th scope="col" style="width: 120px" class="example1"><%= totalPrice %>円</th>
 			          <th scope="col" style="width: 120px" class="example2"></th>
 			        </tr>
-			      </tfoot>
+			      </tfoot> --%>
 			     	<% } else { %>
 			        <tr>
 			          <th scope="row" style="width: 50px" class="checkbox"><div>
@@ -97,8 +112,14 @@ color:red;
 			          <td style="width: 100px"></td>
 			          <td style="width: 120px" class="example1"><input class="kosuu" value=""> 個</td>
 			          <td style="width: 120px" class="example1"> 円</td>
-			          <td style="width: 120px" class="example1"> 円</td>
+			          <td style="width: 120px" class="example1">
+			          	<script>
+			          		var subtotal = 0;
+			          	</script>
+			          	0 円
+			          </td>
 			        </tr>
+			        <% } %>
 		      </tbody>
 		      <tfoot>
 		        <tr>
@@ -108,10 +129,37 @@ color:red;
 		          <th scope="col" style="width: 100px"></th>
 		          <th scope="col" style="width: 120px"></th>
 		          <th scope="col" style="width: 120px" class="example1">合計金額</th>
-		          <th scope="col" style="width: 120px" class="example1">円</th>
+		          <th scope="col" style="width: 120px" class="example1" id="total">
+		          	<script>
+                      //カートに入っている商品の合計金額を計算
+                      var tableElem = document.getElementById('table_contents');
+                        var rowElems = tableElem.rows;
+                        var totalPrice = 0;
+                        for (i = 0, len = rowElems.length; i < len; i++) {
+                          totalPrice += parseInt(rowElems[i].cells[6].innerText);
+                        }
+                        document.getElementById('total').innerText = totalPrice + " 円";
+                      //数量が変更された場合の再計算処理
+                      document.getElementById("orderLot").onchange = function () {
+                        var lot = parseInt(document.getElementById("orderLot").value);
+                        console.log(lot);
+                        var subtotal = lot * price;
+                        console.log(subtotal);
+                        document.getElementById("subtotal").innerText = subtotal + " 円";
+
+                      //合計金額の再計算処理
+                        var tableElem = document.getElementById('table_contents');
+                        var rowElems = tableElem.rows;
+                        var totalPrice = 0;
+                        for (i = 0, len = rowElems.length; i < len; i++) {
+                          totalPrice += parseInt(rowElems[i].cells[6].innerText);
+                        }
+                        document.getElementById('total').innerText = totalPrice + " 円"; 
+                    	};
+                    </script>
+		          </th>
 		        </tr>
 		      </tfoot>
-			        <% } %>
 		    </table>
 		    <p><span class="label label-danger">${message}</span></p>
 
