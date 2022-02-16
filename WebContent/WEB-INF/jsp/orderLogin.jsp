@@ -38,6 +38,9 @@ color:red;
 
   <div class="container-sc">
     <div class="shadow p-3 mb-5 bg-body rounded">
+    	    <% if(cartList == null){ %>
+	    		<p class="label-danger">※カートに商品が入っていません</p>
+	    	<% } %>
 	    <form action="/Neutral/OrderSubmitServlet" method="post">
 		    <table class="table table-bordered border-secondary">
 		      <thead>

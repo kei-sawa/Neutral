@@ -20,6 +20,11 @@ Cart cart = (Cart) session.getAttribute("cart");
 <link rel="stylesheet" href="css/headers.css">
 <link rel="stylesheet" href="css/common.css">
 <link rel="stylesheet" href="css/style.css">
+<style>
+.label-danger {
+color:red;
+}
+</style>
 </head>
 <body>
 <!-- HEADER -->
@@ -31,6 +36,9 @@ Cart cart = (Cart) session.getAttribute("cart");
 
     <div class="container-sc">
 	    <div class="shadow p-3 mb-5 bg-body rounded">
+	    	<% if(cart == null){ %>
+	    		<p class="label-danger">※カートに商品が入っていません</p>
+	    	<% } %>
 		    <form action="  " method="post">
 		    <table class="table table-bordered border-secondary">
 		      <thead>
