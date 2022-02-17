@@ -118,6 +118,7 @@ color:red;
 			          	</script>
 			          	0 円
 			          </td>
+			          <td></td>
 			        </tr>
 			        <% } %>
 		      </tbody>
@@ -158,12 +159,15 @@ color:red;
                     	};
                     </script>
 		          </th>
+		          <th></th>
 		        </tr>
 		      </tfoot>
 		    </table>
+		    </form>
 		    <p><span class="label label-danger">${message}</span></p>
 
-		    <p>ご購入の商品にチェックを入れてください。</p>
+		    <p>ご購入をご希望の商品にチェックを入れてください。</p>
+		    <p>お買い物を続ける場合は、買い物を続けるボタンをクリックしてください。</p>
 		    <p>上記内容でよろしければご注文を確定するボタンをクリックしてください。</p>
 		    <div><br>
 		    	<a href="/Neutral/WelcomeServlet"><button type="button" class="btn btn-outline-dark">買い物を続ける</button></a>
@@ -172,7 +176,6 @@ color:red;
 		        <%// } %>
 		        <br><br>
 		    </div>
-	    </form>
     </div>
   </div>
 </main>

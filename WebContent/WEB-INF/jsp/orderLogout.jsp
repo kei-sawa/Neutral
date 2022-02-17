@@ -57,9 +57,11 @@ color:red;
 		        <% // for (Cart cart: cartList) { %>
 			        <% if (cart != null) { %>
 			        <tr>
-			          <th scope="row" style="width: 50px" class="checkbox"><div>
-			            <input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="...">
-			          </div></th>
+			          <th scope="row" style="width: 50px" class="checkbox">
+				          <div>
+				            <input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="...">
+				          </div>
+			          </th>
 			          <td style="width: 100px"><%=cart.getProductId()%></td>
 			          <td style="width: 200px"><%=cart.getOrderProduct()%></td>
 			          <td style="width: 100px"><%=cart.getOrderSize()%></td>
@@ -82,9 +84,11 @@ color:red;
 			        </tr>
 			        <% } else { %>
 			        <tr>
-			          <th scope="row" style="width: 50px" class="checkbox"><div>
-			            <input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="...">
-			          </div></th>
+			          <th scope="row" style="width: 50px" class="checkbox">
+				          <div>
+				            <input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="...">
+				          </div>
+				      </th>
 			          <td style="width: 100px"></td>
 			          <td style="width: 200px"></td>
 			          <td style="width: 100px"></td>
@@ -108,7 +112,7 @@ color:red;
 		          <th scope="col" style="width: 100px"></th>
 		          <th scope="col" style="width: 120px"></th>
 		          <th scope="col" style="width: 120px" class="example1">合計金額</th>
-		          <th scope="col" style="width: 120px" class="example1" id="total">円
+		          <th scope="col" style="width: 120px" class="example1" id="total">
 		           <script>
                       //カートに入っている商品の合計金額を計算
                       var tableElem = document.getElementById('table_contents');
