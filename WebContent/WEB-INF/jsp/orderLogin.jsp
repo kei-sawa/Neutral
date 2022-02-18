@@ -59,7 +59,9 @@ color:red;
 
 			    <% if (cartList != null) { %>
 			    	<% int totalPrice = 0; %>
-		        	<%  for (Cart cart: cartList) { %>
+		        	<%  for (int i = 0; i < cartList.size(); i++) { 
+		        			Cart cart = cartList.get(i);
+		        	%>
 			        <tr>
 			          <th scope="row" style="width: 50px" class="checkbox">
 			          	<div>
@@ -69,21 +71,23 @@ color:red;
 			          <td style="width: 100px"><%=cart.getProductId()%></td>
 			          <td style="width: 200px"><%=cart.getOrderProduct()%></td>
 			          <td style="width: 100px" class="example2"><%=cart.getOrderSize()%></td>
-			          <td style="width: 120px" class="example1"><input class="kosuu" type="number" id="orderLot" name="orderNumber<%=cart.getCartId()%>" min="1" value="<%=cart.getOrderNumber()%>">個</td>
-			          <td style="width: 120px" class="example1">
+			          <td style="width: 120px" class="example1"><input class="kosuu" type="number" id="orderLot<%=i%>" name="orderNumber<%=cart.getCartId()%>" min="1" value="<%=cart.getOrderNumber()%>">個</td>
+			          <td style="width: 120px" class="example1" id="orderPrice<%=i%>">
 			          	<script>
-			          		var price = <%=cart.getOrderPrice()%>;
+			          		var price<%=i%> = <%=cart.getOrderPrice()%>;
 			          	</script>
 			          	<%=cart.getOrderPrice()%>円
 			          </td>
-			          <td style="width: 120px" class="example1" id="subtotal">
+			          <td style="width: 120px" class="example1" id="subtotal<%=i%>">
 			          	<script>
 	                  		  //注文数量と価格をもとに小計を計算
-		                    var lot = parseInt(document.getElementById("orderLot").value);
-		                    console.log(lot);
-		                    var subtotal = lot * price;
-		                    document.getElementById("subtotal").innerText = subtotal + " 円";
+		                    var lot<%=i%> = parseInt(document.getElementById("orderLot<%=i%>").value);
+		                    console.log(lot<%=i%>);
+		                    var subtotal<%=i%> = lot<%=i%> * price<%=i%>;
+		                    console.log(subtotal<%=i%>);
+		                   /*  document.getElementById("subtotal").innerText = subtotal + " 円"; */
 		               	</script>
+		               	<%=cart.getSubtotal() %>円
 			          </td>
 			          <td style="width: 120px" class="example2"><a href="/Neutral/CartDeleteServlet?id=<%=cart.getCartId()%>"><button type="button" class="btn btn-outline-danger">削除</button></a></td>
 			        </tr>
@@ -140,13 +144,19 @@ color:red;
                           totalPrice += parseInt(rowElems[i].cells[6].innerText);
                         }
                         document.getElementById('total').innerText = totalPrice + " 円";
-                      //数量が変更された場合の再計算処理
-                      document.getElementById("orderLot").onchange = function () {
-                        var lot = parseInt(document.getElementById("orderLot").value);
-                        console.log(lot);
-                        var subtotal = lot * price;
-                        console.log(subtotal);
-                        document.getElementById("subtotal").innerText = subtotal + " 円";
+                    </script>
+                    
+                      <!-- 数量が変更された場合の再計算処理 -->
+                     <% for(int i =  0; i < cartList.size(); i++){ %>
+                     <script>
+                      document.getElementById("orderLot<%=i%>").onchange = function() {
+                        var lot<%=i%> = parseInt(document.getElementById("orderLot<%=i%>").value);
+                        console.log(lot<%=i%>);
+<%--                         var price<%=i%> = parseInt(document.getElementById("orderPrice<%=i%>").value);
+                        console.log(price<%=i%>); --%>
+                        var subtotal<%=i%> = lot<%=i%> * price<%=i%>;
+                        console.log(subtotal<%=i%>);
+                        document.getElementById("subtotal<%=i%>").innerText = subtotal<%=i%> + " 円";
 
                       //合計金額の再計算処理
                         var tableElem = document.getElementById('table_contents');
@@ -157,13 +167,13 @@ color:red;
                         }
                         document.getElementById('total').innerText = totalPrice + " 円"; 
                     	};
-                    </script>
+                    	</script>
+                     <% }; %>
 		          </th>
 		          <th></th>
 		        </tr>
 		      </tfoot>
 		    </table>
-		    </form>
 		    <p><span class="label label-danger">${message}</span></p>
 
 		    <p>ご購入をご希望の商品にチェックを入れてください。</p>
@@ -176,6 +186,7 @@ color:red;
 		        <%// } %>
 		        <br><br>
 		    </div>
+		 </form>
     </div>
   </div>
 </main>
