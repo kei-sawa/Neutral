@@ -151,7 +151,8 @@ color:red;
                      <% for(int i =  0; i < cartList.size(); i++){ %>
                      <script>
                       document.getElementById("orderLot<%=i%>").onchange = function() {
-                        var lot<%=i%> = parseInt(document.getElementById("orderLot<%=i%>").value);
+                        console.log("テスト");
+						var lot<%=i%> = parseInt(document.getElementById("orderLot<%=i%>").value);
                         console.log(lot<%=i%>);
 <%--                         var price<%=i%> = parseInt(document.getElementById("orderPrice<%=i%>").value);
                         console.log(price<%=i%>); --%>
