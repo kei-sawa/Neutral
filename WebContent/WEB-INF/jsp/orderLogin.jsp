@@ -66,7 +66,7 @@ color:red;
 			        <tr>
 			          <th scope="row" style="width: 50px" class="checkbox">
 			          	<div>
-			          	  <input class="form-check-input" type="checkbox" name="checked<%=cart.getCartId()%>" value="<%=cart.getCartId()%>" aria-label="..." checked>
+			          	  <input class="form-check-input" type="checkbox" name="checked<%=cart.getCartId()%>" value="<%=cart.getCartId()%>" id="checkList<%=i%>" aria-label="..." checked>
 			          	</div>
 			          </th>
 			          <td style="width: 100px"><%=cart.getProductId()%></td>
@@ -151,24 +151,30 @@ color:red;
                      <% for(int i =  0; i < cartList.size(); i++){ %>
                      <script>
                       document.getElementById("orderLot<%=i%>").onchange = function() {
-                        console.log("テスト");
-						var lot<%=i%> = parseInt(document.getElementById("orderLot<%=i%>").value);
-                        console.log(lot<%=i%>);
-<%--                         var price<%=i%> = parseInt(document.getElementById("orderPrice<%=i%>").value);
-                        console.log(price<%=i%>); --%>
-                        var subtotal<%=i%> = lot<%=i%> * price<%=i%>;
-                        console.log(subtotal<%=i%>);
-                        document.getElementById("subtotal<%=i%>").innerText = subtotal<%=i%> + " 円";
 
-                      //合計金額の再計算処理
-                        var tableElem = document.getElementById('table_contents');
-                        var rowElems = tableElem.rows;
-                        var totalPrice = 0;
-                        for (i = 0, len = rowElems.length; i < len; i++) {
-                          totalPrice += parseInt(rowElems[i].cells[6].innerText);
-                        }
-                        document.getElementById('total').innerText = totalPrice + " 円"; 
-                    	};
+                    	  if(document.getElementById("checkList<%=i%>").checked==true){
+	                        var lot<%=i%> = parseInt(document.getElementById("orderLot<%=i%>").value);
+	                        console.log(lot<%=i%>);
+	<%--                         var price<%=i%> = parseInt(document.getElementById("orderPrice<%=i%>").value);
+	                        console.log(price<%=i%>); --%>
+	                        var subtotal<%=i%> = lot<%=i%> * price<%=i%>;
+	                        console.log(subtotal<%=i%>);
+	                        document.getElementById("subtotal<%=i%>").innerText = subtotal<%=i%> + " 円";
+                    	  }else{
+                    		  
+                    		document.getElementById("subtotal<%=i%>").innerText = 0 + " 円";  
+                    	  }
+	
+	                      //合計金額の再計算処理
+	                        var tableElem = document.getElementById('table_contents');
+	                        var rowElems = tableElem.rows;
+	                        var totalPrice = 0;
+	                        
+	                        for (i = 0, len = rowElems.length; i < len; i++) {
+	                          totalPrice += parseInt(rowElems[i].cells[6].innerText);
+	                        }
+	                        document.getElementById('total').innerText = totalPrice + " 円"; 
+	                    	};
                     	</script>
                      <% }; %>
 		          </th>
