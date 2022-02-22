@@ -33,6 +33,7 @@ Account account = (Account) session.getAttribute("Account");
 
     <div class="container-scr">
       <div class="shadow p-3 mb-5 bg-body rounded">
+        <div>テストコメント</div>
       <p strong>会員登録情報</p>
       <form action="  " method="post">
         <table class="table table-bordered border-secondary">
