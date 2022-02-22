@@ -27,6 +27,37 @@ ArrayList<Cart> cartList = (ArrayList<Cart>)session.getAttribute("cartList");
 color:red;
 }
 </style>
+<!-- 小計と合計の算出メソッドを定義  -->
+<script>
+	function total(){
+		var tableElem = document.getElementById('table_contents');
+	       var rowElems = tableElem.rows;
+	       var totalPrice = 0;
+	       
+	       for (i = 0, len = rowElems.length; i < len; i++) {
+	         totalPrice += parseInt(rowElems[i].cells[6].innerText);
+	       }
+	       document.getElementById('total').innerText = totalPrice + " 円"; 
+	};
+	
+   <% for(int i =  0; i < cartList.size(); i++){ %>
+    function calcurate<%=i%>() {
+  	  if(document.getElementById("checkList<%=i%>").checked==true){
+       var lot<%=i%> = parseInt(document.getElementById("orderLot<%=i%>").value);
+       console.log(lot<%=i%>);
+       var subtotal<%=i%> = lot<%=i%> * price<%=i%>;
+       console.log(subtotal<%=i%>);
+       document.getElementById("subtotal<%=i%>").innerText = subtotal<%=i%> + " 円";
+  	  }else{
+  		  
+  		document.getElementById("subtotal<%=i%>").innerText = 0 + " 円";  
+  	  }
+
+     //合計金額の再計算処理
+	total();
+   	};
+   <% }; %>
+</script>
 </head>
 <body>
 <!-- HEADER -->
@@ -65,7 +96,7 @@ color:red;
 			        <tr>
 			          <th scope="row" style="width: 50px" class="checkbox">
 			          	<div>
-			          	  <input class="form-check-input" type="checkbox" name="checked<%=cart.getCartId()%>" value="<%=cart.getCartId()%>" id="checkList<%=i%>" aria-label="..." checked>
+			          	  <input class="form-check-input" type="checkbox" name="checked<%=cart.getCartId()%>" value="<%=cart.getCartId()%>" id="checkList<%=i%>" onchange="calcurate<%=i%>()" aria-label="..." checked>
 			          	</div>
 			          </th>
 			          <td style="width: 100px"><%=cart.getProductId()%></td>
@@ -137,44 +168,17 @@ color:red;
 		          <th scope="col" style="width: 120px" class="example1" id="total">
 		          	<script>
                       //カートに入っている商品の合計金額を計算
-                      var tableElem = document.getElementById('table_contents');
-                        var rowElems = tableElem.rows;
-                        var totalPrice = 0;
-                        for (i = 0, len = rowElems.length; i < len; i++) {
-                          totalPrice += parseInt(rowElems[i].cells[6].innerText);
-                        }
-                        document.getElementById('total').innerText = totalPrice + " 円";
+						total();
                     </script>
                     
                       <!-- 数量が変更された場合の再計算処理 -->
-                     <% for(int i =  0; i < cartList.size(); i++){ %>
                      <script>
+                     <% for(int i =  0; i < cartList.size(); i++){ %>
                       document.getElementById("orderLot<%=i%>").onchange = function() {
-                    	  if(document.getElementById("checkList<%=i%>").checked==true){
-	                        var lot<%=i%> = parseInt(document.getElementById("orderLot<%=i%>").value);
-	                        console.log(lot<%=i%>);
-	<%--                         var price<%=i%> = parseInt(document.getElementById("orderPrice<%=i%>").value);
-	                        console.log(price<%=i%>); --%>
-	                        var subtotal<%=i%> = lot<%=i%> * price<%=i%>;
-	                        console.log(subtotal<%=i%>);
-	                        document.getElementById("subtotal<%=i%>").innerText = subtotal<%=i%> + " 円";
-                    	  }else{
-                    		  
-                    		document.getElementById("subtotal<%=i%>").innerText = 0 + " 円";  
-                    	  }
-	
-	                      //合計金額の再計算処理
-	                        var tableElem = document.getElementById('table_contents');
-	                        var rowElems = tableElem.rows;
-	                        var totalPrice = 0;
-	                        
-	                        for (i = 0, len = rowElems.length; i < len; i++) {
-	                          totalPrice += parseInt(rowElems[i].cells[6].innerText);
-	                        }
-	                        document.getElementById('total').innerText = totalPrice + " 円"; 
+                    	  calcurate<%=i%>();
 	                    	};
-                    	</script>
                      <% }; %>
+                 	</script>
 		          </th>
 		          <th></th>
 		        </tr>

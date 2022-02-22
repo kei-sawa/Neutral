@@ -25,6 +25,33 @@ Cart cart = (Cart) session.getAttribute("cart");
 color:red;
 }
 </style>
+<!-- 小計と合計の算出メソッドを定義  -->
+<script>
+	function total(){
+		var tableElem = document.getElementById('table_contents');
+	       var rowElems = tableElem.rows;
+	       var totalPrice = 0;
+	       
+	       for (i = 0, len = rowElems.length; i < len; i++) {
+	         totalPrice += parseInt(rowElems[i].cells[6].innerText);
+	       }
+	       document.getElementById('total').innerText = totalPrice + " 円"; 
+	};
+	
+    function calcurate() {
+  	  if(document.getElementById("checkboxNoLabel").checked==true){
+       var lot = parseInt(document.getElementById("orderLot").value);
+       console.log(lot);
+       var subtotal = lot * price;
+       console.log(subtotal);
+       document.getElementById("subtotal").innerText = subtotal + " 円";
+  	  }else{
+  		  
+  		document.getElementById("subtotal").innerText = 0 + " 円";  
+  	  }
+  	  total();
+   	};
+</script>
 </head>
 <body>
 <!-- HEADER -->
@@ -59,7 +86,7 @@ color:red;
 			        <tr>
 			          <th scope="row" style="width: 50px" class="checkbox">
 				          <div>
-				            <input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="...">
+				            <input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" onchange="calcurate()" aria-label="..." checked>
 				          </div>
 			          </th>
 			          <td style="width: 100px"><%=cart.getProductId()%></td>
@@ -72,14 +99,8 @@ color:red;
 			          	</script>
 			          	<%=cart.getOrderPrice()%>円
 			          </td>
-			          <td style="width: 120px" class="example1" id="subtotal"><%=cart.getSubtotal()%> 円
-					      <script>
-	                  		  //注文数量と価格をもとに小計を計算
-		                    var lot = parseInt(document.getElementById("orderLot").value);
-		                    console.log(lot);
-		                    var subtotal = lot * price;
-		                    document.getElementById("subtotal").innerText = subtotal + " 円";
-		                  </script>
+			          <td style="width: 120px" class="example1" id="subtotal">
+					    <%=cart.getSubtotal() %>円
 			          </td>
 			        </tr>
 			        <% } else { %>
@@ -115,29 +136,11 @@ color:red;
 		          <th scope="col" style="width: 120px" class="example1" id="total">
 		           <script>
                       //カートに入っている商品の合計金額を計算
-                      var tableElem = document.getElementById('table_contents');
-                        var rowElems = tableElem.rows;
-                        var totalPrice = 0;
-                        for (i = 0, len = rowElems.length; i < len; i++) {
-                          totalPrice += parseInt(rowElems[i].cells[6].innerText);
-                        }
-                        document.getElementById('total').innerText = totalPrice + " 円";
+                      total();
                       //数量が変更された場合の再計算処理
                       document.getElementById("orderLot").onchange = function () {
-                        var lot = parseInt(document.getElementById("orderLot").value);
-                        console.log(lot);
-                        var subtotal = lot * price;
-                        console.log(subtotal);
-                        document.getElementById("subtotal").innerText = subtotal + " 円";
-
-                      //合計金額の再計算処理
-                        var tableElem = document.getElementById('table_contents');
-                        var rowElems = tableElem.rows;
-                        var totalPrice = 0;
-                        for (i = 0, len = rowElems.length; i < len; i++) {
-                          totalPrice += parseInt(rowElems[i].cells[6].innerText);
-                        }
-                        document.getElementById('total').innerText = totalPrice + " 円"; 
+                        calcurate();
+                        total();
                     };
                     </script>
 		          </th>
