@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ page import="dao.CartDAO,model.Cart,java.util.ArrayList"%>
 <%
+//テストコメント
 //リクエストスコープからカート情報を取得
 // Cart cart = (Cart) session.getAttribute("cart");
 // セッションスコープからカート情報を取得
